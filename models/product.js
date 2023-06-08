@@ -4,10 +4,6 @@ const Schema = mongoose.Schema;
 
 // Un schema determine la structure du document en base
 const productSchema = new Schema({
-  _id: {
-    type: String,
-    required: false,
-  },
   name: {
     type: String,
     required: true,
@@ -18,4 +14,4 @@ const productSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("products", productSchema);

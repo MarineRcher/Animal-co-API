@@ -9,12 +9,13 @@ const productRoutes = require("./routes/product");
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  console.log("middleware");
+
   next();
 });
 
 // connexion à la base de donnée
 app.use("/", productRoutes);
+
 
 mongoose
   .connect(
