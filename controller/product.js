@@ -1,6 +1,6 @@
 const product = require("./../models/product.js");
 const products = require("./../models/product.js");
-const asyncErrorHandler = require("./../error/asyncErrorHandler.js");
+const asyncErrorHandler = require("../middleware/asyncErrorHandler.js");
 
 //get all products
 exports.getProducts = asyncErrorHandler(async (req, res, next) => {
