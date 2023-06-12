@@ -1,10 +1,12 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
 
 const productRoutes = require("./routes/product");
+const userRoutes = require("./routes/auth");
 
 app.use(bodyParser.json());
 
@@ -15,11 +17,13 @@ app.use((req, res, next) => {
 
 // connexion à la base de donnée
 app.use("/", productRoutes);
+app.use("/auth", userRoutes);
 
 
 mongoose
   .connect(
-    "mongodb+srv://marine_patry:Pm13032002@cluster0.mgsf81h.mongodb.net/animalEcom"
+    process.env.connection
+   
   )
   .then((result) => {
     //je lance l'appli express que si je suis connecter à mongodb
