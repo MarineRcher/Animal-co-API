@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
+const cors = require("cors");
+app.use(cors());
 
 const productRoutes = require("./routes/product");
 const userRoutes = require("./routes/auth");
@@ -11,7 +13,6 @@ const userRoutes = require("./routes/auth");
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-
   next();
 });
 
@@ -19,12 +20,8 @@ app.use((req, res, next) => {
 app.use("/", productRoutes);
 app.use("/auth", userRoutes);
 
-
 mongoose
-  .connect(
-    process.env.connection
-   
-  )
+  .connect(process.env.connection)
   .then((result) => {
     //je lance l'appli express que si je suis connecter à mongodb
     app.listen(3003, () => {
