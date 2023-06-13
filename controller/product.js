@@ -28,16 +28,35 @@ exports.getProductById = asyncErrorHandler(async (req, res, next) => {
   });
 });
 
+// get product by category
+
+exports.getProductByCategories = asyncErrorHandler(async (req, res, next) => {
+  const categoryAnimal = req.params.categoryAnimal;
+  const category = req.params.category;
+
+  products
+    .find({ categoryAnimal: categoryAnimal, category: category })
+    .then((product) => {
+      res.status(200).json({
+        message: "product found",
+        post: product,
+      });
+    });
+});
 //create a product
 
 exports.createProduct = asyncErrorHandler(async (req, res, next) => {
   const name = req.body.name;
   const price = req.body.price;
+  const description = req.body.description;
+  const categories = req.body.categories;
 
   // TODO: ajouter des controles...
   const product = new products({
     name: name,
     price: price,
+    description: description,
+    categories: categories,
   });
 
   product
