@@ -9,6 +9,7 @@ app.use(cors());
 
 const productRoutes = require("./routes/product");
 const userRoutes = require("./routes/auth");
+const cartRoutes = Require("./routes/cart");
 
 app.use(bodyParser.json());
 
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
 // connexion à la base de donnée
 app.use("/", productRoutes);
 app.use("/auth", userRoutes);
+app.use("/cart", cartRoutes);
 
 mongoose
   .connect(process.env.connection)
