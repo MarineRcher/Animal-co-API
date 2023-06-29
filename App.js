@@ -9,7 +9,7 @@ app.use(cors());
 
 const productRoutes = require("./routes/product");
 const userRoutes = require("./routes/auth");
-const cartRoutes = Require("./routes/cart");
+const cartRoutes = require("./routes/cart");
 
 app.use(bodyParser.json());
 

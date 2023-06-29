@@ -4,9 +4,9 @@ const cartController = require("../controller/cart.js");
 
 const router = express.Router();
 
-router.get("/products/", cartController.getAllCartByUserId);
+router.get("/product/:userId", cartController.getAllCartByUserId);
 
-router.post("/product/:id", cartController.postCart);
+router.post("/product", cartController.postCart);
 
 router.patch("/product/:id", cartController.patchCart);
 

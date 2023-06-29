@@ -1,59 +1,72 @@
-const { Panier } = require('./model');
+const { Cart } = require('./../models/cart');
 
-// Contrôleur pour ajouter un produit au panier
-async function ajouterProduitAuPanier(req, res) {
-  // ...
-}
+exports.postCart = async (req, res) => {
+  const { userId, productId, quantity } = req.body;
 
-// Contrôleur pour mettre à jour la quantité d'un produit dans le panier
-async function mettreAJourQuantiteProduit(req, res) {
+  try {
+    // Create a new cart document
+    const cart = new Cart({
+      userId,
+      productId,
+      quantity
+    });
+
+    // Save the document to the database
+    cart.save()
+      .then((result) => {
+        res.status(201).json({
+          message: "Product added successfully",
+          product: result,
+        });
+      });
+  } catch (error) {
+    console.error('An error occurred:', error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+};
+
+// Patch the cart quantity for a specific product
+exports.patchCart = async (req, res) => {
   const { id } = req.params;
   const { quantity } = req.body;
 
   try {
-    // Mettez à jour la quantité du produit dans le panier
-    await Panier.findByIdAndUpdate(id, { quantity });
+    // Update the quantity of the product in the cart
+    await Cart.findByIdAndUpdate(id, { quantity });
 
-    res.json({ success: true, message: 'Quantité du produit mise à jour avec succès' });
-  } catch (err) {
-    console.error('Une erreur s\'est produite :', err);
-    res.status(500).json({ error: 'Une erreur s\'est produite' });
+    res.json({ success: true, message: 'Product quantity updated successfully' });
+  } catch (error) {
+    console.error('An error occurred:', error);
+    res.status(500).json({ error: 'An error occurred' });
   }
-}
+};
 
-// Contrôleur pour supprimer un produit du panier
-async function supprimerProduitDuPanier(req, res) {
+// Delete a product from the cart
+exports.deleteCart = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Supprimez le produit du panier
-    await Panier.findByIdAndDelete(id);
+    // Remove the product from the cart
+    await Cart.findByIdAndDelete(id);
 
-    res.json({ success: true, message: 'Produit supprimé du panier avec succès' });
-  } catch (err) {
-    console.error('Une erreur s\'est produite :', err);
-    res.status(500).json({ error: 'Une erreur s\'est produite' });
+    res.json({ success: true, message: 'Product removed from cart successfully' });
+  } catch (error) {
+    console.error('An error occurred:', error);
+    res.status(500).json({ error: 'An error occurred' });
   }
-}
-// Contrôleur pour récupérer tous les éléments du panier par userId
-async function getPanierByUserId(req, res) {
-    const { userId } = req.params;
-  
-    try {
-      // Récupérez tous les éléments du panier par userId
-      const panier = await Panier.find({ userId });
-  
-      res.json({ success: true, panier });
-    } catch (err) {
-      console.error('Une erreur s\'est produite :', err);
-      res.status(500).json({ error: 'Une erreur s\'est produite' });
-    }
+};
+
+// Get all cart items by userId
+exports.getAllCartByUserId = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Get all cart items by userId
+    const cartItems = await Cart.find({ userId });
+
+    res.json({ success: true, cartItems });
+  } catch (error) {
+    console.error('An error occurred:', error);
+    res.status(500).json({ error: 'An error occurred' });
   }
-  
-  module.exports = {
-    ajouterProduitAuPanier,
-    mettreAJourQuantiteProduit,
-    supprimerProduitDuPanier,
-    getPanierByUserId
-  };
-  
+};
