@@ -1,14 +1,16 @@
 # API RESTful
 
+API relié à un site E-commerce pour produits animaliers
+
 API en nodeJS, avec express, body-parser, mongoose.
 
 La base de donnée est sur mongoDB.
 
-Elle contient 2 tables :
+Elle contient 3 Collections :
 
-Products:
+- products
+- users
+- Cart
 
-- id
-- name
-- category
--
+Afin d'installer les dépendances nécessaires :
+` npm install `
